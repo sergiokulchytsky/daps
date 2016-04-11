@@ -180,6 +180,8 @@ class Controller_User extends Controller
             $this->params['email'] = $_POST['email'];
             $this->params['password'] = $_POST['password'];
 
+            Model_User::caesar($this->params['password']);
+            
             $this->params['errors'] = false;
             $this->params['result'] = false;
 
@@ -214,62 +216,6 @@ class Controller_User extends Controller
         }
 
         $this->view->render('users/signin_view', $this->params);
-
-        return true;
-    }
-
-    public function action_Prelogin()
-    {
-        if (!Model_User::isGuest()) {
-            $this->redirect('/');
-        }
-
-        $this->params['email'] = '';
-
-        if (isset($_POST['submit'])) {
-            $this->params['email'] = $_POST['email'];
-
-            $this->params['errors'] = false;
-
-            if (!Model_User::checkEmail($this->params['email'])) {
-                $this->params['errors']['email'] = 'Invalid Email!';
-            }
-
-            if ($this->params['errors'] === false) {
-                $this->params['user'] = Model_User::getUserByEmail($this->params['email']);
-
-                if ($this->params['user'] === null) {
-                    $this->params['errors']['login'] = 'User with this email doesn\'t exist!';
-                } else {
-                    if (empty($this->params['user']['pass'])) {
-                        $route = 'set/' . $this->params['user']['_id']->{'$id'};
-                        $this->redirect($route);
-                    } else {
-                        $blocked = Model_User::isBlocked($this->params['user']['_id']->{'$id'});
-
-                        if ($blocked) {
-                            $this->params['errors']['login'] = 'This user is Blocked!';
-                        } else {
-                            if (isset($_COOKIE[$this->params['user']['_id']->{'$id'}])) {
-                                $fields = unserialize($_COOKIE[$this->params['user']['_id']->{'$id'}]);
-                                if($fields['time'] !== 0 && time() - $fields['time'] < self::TIME) {
-                                    $time = self::TIME - (time() - $fields['time']);
-                                    $this->params['errors']['time'] = 'Try after ' . $time . ' seconds!';
-                                } else {
-                                    $route = 'enter/' . $this->params['user']['_id']->{'$id'};
-                                    $this->redirect($route);
-                                }
-                            } else {
-                                $route = 'enter/' . $this->params['user']['_id']->{'$id'};
-                                $this->redirect($route);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        $this->view->render('users/emailin_view', $this->params);
 
         return true;
     }

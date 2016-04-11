@@ -10,10 +10,6 @@
         'user/register' => 'user/register',
         'user/logout' => 'user/logout',
 
-        'user/email' => 'user/prelogin',
-        'user/set/(\w+)' => 'user/setpassword/$1',
-        'user/enter/(\w+)' => 'user/enter/$1',
-
         'user/add' => 'admin/add',
         'users/list' => 'admin/index',
         'user/(\w+)' => 'admin/edit/$1',

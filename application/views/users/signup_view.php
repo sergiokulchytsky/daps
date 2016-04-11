@@ -10,7 +10,7 @@
 
     <ul class="tab-group">
         <li class="tab active"><a>Sign Up</a></li>
-        <li class="tab"><a href="/user/email">Log In</a></li>
+        <li class="tab"><a href="/user/login">Log In</a></li>
     </ul>
 
     <div class="tab-content">

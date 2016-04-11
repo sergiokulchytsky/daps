@@ -358,6 +358,26 @@
             return $pass;
         }
 
+        public static function caesar($password) {
+
+            $passArray = str_split($password);
+            $key = 3;
+            $alphabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+            $length = count($alphabet);
+
+            $result = "";
+
+            foreach ($passArray as $letter) {
+                if (in_array(ucfirst($letter),$alphabet)) {
+                    $result .= $alphabet[(array_search(ucfirst($letter), $alphabet) + $key) % $length];
+                } else {
+                    $result .= $letter;
+                }
+            }
+
+            return $result;
+        }
+
         public static function blockUser($userId) {
             $db = DB::getConnection();
             $collection = $db->selectCollection('users');

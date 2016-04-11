@@ -27,7 +27,7 @@ include_once ROOT.'/application/models/Model_User.php'; ?>
                     </ul>
                     <ul class="pull-right">
                         <?php if(Model_User::isGuest()) {?>
-                            <li><a href="/user/email">Login<i class="material-icons">lock_outline</i></a></li>
+                            <li><a href="/user/login">Login<i class="material-icons">lock_outline</i></a></li>
                         <?php } else { ?>
                             <li><a href="/profile"><i class="material-icons">account_circle</i>Profile</a></li>
                             <?php if(Model_User::isAdmin()):?>
