@@ -1,0 +1,17 @@
+AddDefaultCharset UTF-8
+
+# Block to view folders
+Options -Indexes
+
+# Enable to direct for symbolic links
+Options +FollowSymLinks
+
+# On mod_rewrite
+RewriteEngine On
+
+# If request to non exist file
+RewriteCond %{REQUEST_FILENAME} !-f
+# If request to non exist folder
+RewriteCond %{REQUEST_FILENAME} !-d
+# Than redirect to index.php
+RewriteRule .* index.php [L]
